@@ -92,7 +92,7 @@ const FormRenderer: React.FC = () => {
     return (
         <Box>
             <form onSubmit={handleSubmit}>
-                {questions.map(question => (
+                {questions.filter(q => q.saveStatus === "saved").map(question => (
                     <FormControl key={question.id} isInvalid={!!errors[question.id]} mb={4}>
                         <FormLabel htmlFor={`field-${question.id}`}>{question.label}</FormLabel>
                         {question.helperText && (

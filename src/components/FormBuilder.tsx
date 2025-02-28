@@ -35,7 +35,7 @@ const FormBuilder: React.FC = () => {
     const [questions, setQuestions] = useState<Question[]>([]);
     const autoSaveTimers = useRef<Map<string, NodeJS.Timeout>>(new Map());
     const toast = useToast();
-    const { isOpen, onOpen, onClose } = useDisclosure(); 
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [renderKey, setRenderKey] = useState(0); // Force re-render
 
     const isValidQuestion = (question: Question): boolean => {
@@ -104,7 +104,7 @@ const FormBuilder: React.FC = () => {
         const timer = setTimeout(() => {
             handleAutoSave(question);
             autoSaveTimers.current.delete(question.id);
-        }, 3000);
+        }, 2000);
         autoSaveTimers.current.set(question.id, timer);
     };
 
@@ -172,10 +172,26 @@ const FormBuilder: React.FC = () => {
                                                 <Spinner size="sm" mr={2} />
                                             </Tooltip>
                                         )}
+                                        {question.saveStatus === "initial" && (
+                                            <Tooltip label="Incomplete question">
+                                                <Text mr={2}>
+                                                    <svg width="18px" height="18px" viewBox="0 0 24 24" fill="blue" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C16.1421 4.5 19.5 7.85786 19.5 12ZM21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM11.25 13.5V8.25H12.75V13.5H11.25ZM11.25 15.75V14.25H12.75V15.75H11.25Z" fill="#080341" />
+                                                    </svg>
+                                                </Text>
+
+                                            </Tooltip>
+                                        )}
                                         {question.error && (
                                             <Tooltip label={question.error}>
                                                 <Text color="red.500" mr={2}>
-                                                    Error
+                                                    <svg fill="#ac0c0c" width="19px" height="19px" viewBox="-1.7 0 20.4 20.4" xmlns="http://www.w3.org/2000/svg" className="cf-icon-svg" stroke="#ac0c0c">
+                                                        <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                                                        <g id="SVGRepo_iconCarrier">
+                                                            <path d="M16.417 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.917 7.917zm-6.804.01 3.032-3.033a.792.792 0 0 0-1.12-1.12L8.494 9.173 5.46 6.14a.792.792 0 0 0-1.12 1.12l3.034 3.033-3.033 3.033a.792.792 0 0 0 1.12 1.119l3.032-3.033 3.033 3.033a.792.792 0 0 0 1.12-1.12z" />
+                                                        </g>
+                                                    </svg>
                                                 </Text>
                                             </Tooltip>
                                         )}
